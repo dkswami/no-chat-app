@@ -1,12 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require("mongoose");
-
 const app = express();
 require('dotenv').config();
 
+const userRoutes = require("./routes/userRoutes")
+
+
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/v1/auth", userRoutes);
 
 const connectionParams = {
 	useNewUrlParser: true,
