@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { loginUrl } from '../../utils/api.utils';
 import '../register/register.styles.scss';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import { UserContext } from '../../contexts/user.context';
 
 const defaultFormFields = {
 	email: '',
@@ -12,7 +13,8 @@ const defaultFormFields = {
 
 function Login() {
 	const [formFields, setFormFields] = useState(defaultFormFields);
-
+	
+	const { setIsLoggedIn } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (event) => {
@@ -25,6 +27,7 @@ function Login() {
 			}
 			else if (data.status === true) {
 				localStorage.setItem('user_data', JSON.stringify(data.user))
+				setIsLoggedIn(true);
 				alert(`registered successfully, ${data.user.name}`);
 				navigate('/');
 			}
