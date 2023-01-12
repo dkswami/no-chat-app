@@ -5,12 +5,13 @@ const app = express();
 require('dotenv').config();
 
 const userRoutes = require("./routes/userRoutes")
-
+const messageRoutes = require("./routes/messageRoutes")
 
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/v1/auth", userRoutes);
+app.use("/api/v1/chat", messageRoutes );
 
 const connectionParams = {
 	useNewUrlParser: true,
