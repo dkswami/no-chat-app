@@ -11,14 +11,14 @@ const ChatInput = ({ handleSendMessage }) => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (message.length > 0) {
-			handleSendMessage(message);
-			setMessage('');
+			setMessage("");
+			handleSendMessage(message);			
 		}
 	}
 	return (
 		<div className='chatbox-input'>
 			<form className='input-container' onSubmit={handleSubmit}>
-				<input type="text" placeholder="Type a message" onChange={handleChange}/>
+				<input type="text" placeholder="Type a message" value={message} onChange={handleChange}/>
 				<button>Send</button>
 			</form>
 		</div>

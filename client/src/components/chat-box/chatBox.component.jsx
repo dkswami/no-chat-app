@@ -6,17 +6,21 @@ import ChatInput from '../chat-input/chat-input.component'
 import './chatBox.styles.scss'
 import { useEffect } from 'react'
 
-const ChatBox = ({ selectedUser }) => {
-	const [messages, setMessages] = useState([]);
+const ChatBox = ({ selectedUser, socket }) => {
+	const [ messages, setMessages ] = useState([]);
+	const [ incomingMessage, setIncomingMessage ] = useState(null);
 	const { currentUser } = useContext(UserContext);
 
-	const handleSendMessage = async (message) => {
+	const handleSendMessage = async (messageData) => {
 		try {
-			const response = await axios.post(addMessageUrl, {
+			const dataToSend =  {
 				to: selectedUser._id,
 				from: currentUser._id,
-				message: message
-			});
+				message: messageData
+			}
+			const response = await axios.post(addMessageUrl, dataToSend);
+			socket.current.emit("send-message", dataToSend);
+			setMessages([ ...messages, { fromSelf: true, message: messageData }])
 		} catch (error) {
 			console.log(error);
 		}
@@ -36,7 +40,22 @@ const ChatBox = ({ selectedUser }) => {
 		}
 		fetchAllMessages();
 	}, [selectedUser])
+	
+	useEffect(() => {
+		if(socket.current) {
+			socket.current.on("receive-message", (data) => {
+				setIncomingMessage({ formSelf: false, message: data});
+			})
+		}
+	},[])
 
+	useEffect(() => {
+		if (incomingMessage) {
+			setMessages([...messages, incomingMessage ])
+		}
+	}, [incomingMessage])
+	
+	console.log(incomingMessage)
 	//console.log(messages)
 	return (
 		<div className='chatbox-container'>

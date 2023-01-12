@@ -8,7 +8,7 @@ export const UserContext = createContext({
 });
 
 export const UserProvider = ({ children }) => {
-	const [currentUser, setCurrentUser] = useState({});
+	const [currentUser, setCurrentUser] = useState(undefined);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const userData = localStorage.getItem('user_data')
 

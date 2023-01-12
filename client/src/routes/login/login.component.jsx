@@ -20,8 +20,9 @@ function Login() {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			const { data } = await axios.post(loginUrl, formFields);
-			console.log(data)
+			const response = await axios.post(loginUrl, formFields);
+			console.log(response);
+			const data = response.data;
 			if (data.status === false) {
 				alert(data.message);
 			}
