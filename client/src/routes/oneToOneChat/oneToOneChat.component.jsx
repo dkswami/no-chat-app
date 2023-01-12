@@ -2,7 +2,7 @@ import { useEffect, useContext, useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { io } from "socket.io-client";
-import { getAllUsersUrl, backend } from "../../utils/api.utils"
+import { getAllUsersUrl, backendURL } from "../../utils/api.utils"
 import { UserContext } from "../../contexts/user.context"
 import DispalyUsers from "../../components/display-users/displayUsers.component"
 import ChatBox from "../../components/chat-box/chatBox.component"
@@ -28,7 +28,7 @@ const OneToOneChat = () => {
 		}
 		if (isLoggedIn) {
 			fetchAllUsers();
-			socket.current = io(backend);
+			socket.current = io(backendURL);
 			socket.current.emit("add-user", currentUser._id);
 		} else {
 			navigate('/login');

@@ -46,12 +46,22 @@ io.on("connection", (socket) => {
 		onlineUsers.set(userId, socket.id);
 		//console.log("onlineUsers", userId);
 	});
+	//console.log("connected users",onlineUsers)
 
 	socket.on("send-message", (data) => {
-		const sendUserSocket = onlineUsers.get(data.to);
-		//console.log("send", data)
-		if (sendUserSocket) {
+		const sendUserSocket = onlineUsers.get(data.to);	
+		if (sendUserSocket) {	// if user is online
 			socket.to(sendUserSocket).emit("receive-message", data.message)
 		}
+	})
+
+	socket.on("join-room", (roomId) => {
+		console.log("roomId", roomId)
+		socket.join(roomId);
+	})
+
+	socket.on("send-message-room", (data) => {
+		console.log("room-data", data)
+		socket.to(data.roomId).emit("receive-message-room", data.message);
 	})
 })

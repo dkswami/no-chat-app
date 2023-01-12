@@ -30,7 +30,7 @@ const Navigation = () => {
 						{
 							isLoggedIn ? (
 								<>
-									{currentUser && <span>{currentUser.name}</span>}
+									{currentUser && <span style={{ color: 'white', paddingRight: '10px'}}>{currentUser.name}</span>}
 									<button onClick={handleLogoutClick} style={{ border: 'none' }}>LOG OUT</button>
 								</>
 							) : (
