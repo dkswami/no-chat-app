@@ -18,7 +18,7 @@ export const UserProvider = ({ children }) => {
 			setIsLoggedIn(true)
 		}
 	}, [userData]);
-	//console.log(currentUser, isLoggedIn)
+	console.log(currentUser, isLoggedIn)
 	return (
 		<UserContext.Provider value={{ currentUser, setCurrentUser,  isLoggedIn, setIsLoggedIn }}>
 			{children}

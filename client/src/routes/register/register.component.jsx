@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/user.context';
 import axios from 'axios';
 import { registerUrl } from '../../utils/api.utils';
 import './register.styles.scss';
@@ -14,6 +15,7 @@ const defaultFormFields = {
 function Register() {
 	const [formFields, setFormFields] = useState(defaultFormFields);
 
+	const { setIsLoggedIn } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (event) => {
@@ -26,6 +28,7 @@ function Register() {
 			}
 			else if (data.status === true) {
 				localStorage.setItem('user_data', JSON.stringify(data.user))
+				setIsLoggedIn(true);
 				alert(`registered successfully, ${data.user.name}`);
 				navigate('/');
 			}

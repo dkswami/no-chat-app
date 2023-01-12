@@ -1,0 +1,19 @@
+.oneToOneChat-container {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 1rem;
+	align-items: center;
+	background-color: #ccccdf;
+
+	.users-chat-container {
+		height: 85vh;
+		width: 85vw;
+		background-color: rgba(27, 163, 140, 0.462745098);
+		display: grid;
+		grid-template-columns: 25% 75%;
+		border-radius: 1rem;
+	}
+}

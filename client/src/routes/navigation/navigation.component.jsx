@@ -3,15 +3,17 @@ import { UserContext } from '../../contexts/user.context';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Navigate, NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
 	const { setIsLoggedIn, isLoggedIn, setCurrentUser } = useContext(UserContext);
+	const navigate = useNavigate();
 
 	const handleLogoutClick = () => {
 		setIsLoggedIn(false)
 		localStorage.removeItem('user_data')
 		setCurrentUser({})
+		navigate('/login');
 	}
 
 	return (
@@ -27,7 +29,7 @@ const Navigation = () => {
 					<Nav>
 						{
 							isLoggedIn ? (
-								<button onClick={handleLogoutClick}>LOG OUT</button>
+								<button onClick={handleLogoutClick} style={{ border: 'none'}}>LOG OUT</button>
 							) : (
 								<>
 									<NavLink to="/login" className={({ isActive }) => isActive ? `nav-link active` : `nav-link`}>Login</NavLink>
