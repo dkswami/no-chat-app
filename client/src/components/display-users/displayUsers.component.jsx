@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import './displayUsers.styles.scss'
 
-const DisplayUsers = ({ allUsers }) => {
+const DisplayUsers = ({ allUsers, setSelectedUser }) => {
 	const [selectedIndex, setSelectedIndex] = useState(undefined);
 
 	const handleUserClick = (idx, user) => {
-		setSelectedIndex(idx);		
+		setSelectedIndex(idx);
+		setSelectedUser(user);
 	}
 
 	return (

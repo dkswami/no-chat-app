@@ -15,5 +15,11 @@
 		display: grid;
 		grid-template-columns: 25% 75%;
 		border-radius: 1rem;
+
+		.before-selection {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 	}
 }

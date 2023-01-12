@@ -1,0 +1,23 @@
+.chatbox-container {
+	display: grid;
+	grid-template-rows: 10% 80% 10%;
+	gap: 0.1rem;
+	overflow: hidden;
+
+	.chatbox-header {
+		background-color: #56da61;
+		border-radius: 12px;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 2rem;
+	}
+
+	.chatbox-body {
+		padding: 1rem 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		overflow: auto;
+	}
+}

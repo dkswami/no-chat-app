@@ -4,11 +4,12 @@ import axios from "axios"
 import { getAllUsersUrl } from "../../utils/api.utils"
 import { UserContext } from "../../contexts/user.context"
 import DispalyUsers from "../../components/display-users/displayUsers.component"
-import ChatContainer from "../../components/chat-container/chatContainer.component"
+import ChatBox from "../../components/chat-box/chatBox.component"
 import './oneToOneChat.styles.scss'
 
 const OneToOneChat = () => {
 	const [allUsers, setAllUsers] = useState([]);
+	const [selectedUser, setSelectedUser] = useState(undefined);
 
 	const { currentUser, isLoggedIn } = useContext(UserContext);
 	const navigate = useNavigate();
@@ -34,8 +35,16 @@ const OneToOneChat = () => {
 	return (
 		<div className="oneToOneChat-container">
 			<div className="users-chat-container">
-				<DispalyUsers allUsers={allUsers} />
-				<ChatContainer />
+				<DispalyUsers allUsers={allUsers} setSelectedUser={setSelectedUser} />
+				{
+					selectedUser === undefined ? (
+						<div className="before-selection">
+							<h3>Select a user to start chat</h3>
+						</div>
+					) : (
+						<ChatBox selectedUser={selectedUser} />
+					)
+				}
 			</div>
 		</div>
 	)

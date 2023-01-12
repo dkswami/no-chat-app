@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Navigate, NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
-	const { setIsLoggedIn, isLoggedIn, setCurrentUser } = useContext(UserContext);
+	const { setIsLoggedIn, isLoggedIn, setCurrentUser, currentUser } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const handleLogoutClick = () => {
@@ -23,13 +23,16 @@ const Navigation = () => {
 					<Navbar.Brand href="/">No Chat App</Navbar.Brand>
 					<Nav className="me-auto">
 						<NavLink to="/" className={({ isActive }) => isActive ? `nav-link active` : `nav-link`}>Home</NavLink>
-						<NavLink to="/chat"className={({ isActive }) => isActive ? `nav-link active` : `nav-link`}>One to One Chat</NavLink>
+						<NavLink to="/chat" className={({ isActive }) => isActive ? `nav-link active` : `nav-link`}>One to One Chat</NavLink>
 						<NavLink to="/room" className={({ isActive }) => isActive ? `nav-link active` : `nav-link`}>Room Chat</NavLink>
 					</Nav>
 					<Nav>
 						{
 							isLoggedIn ? (
-								<button onClick={handleLogoutClick} style={{ border: 'none'}}>LOG OUT</button>
+								<>
+									<span>{currentUser.name}</span>
+									<button onClick={handleLogoutClick} style={{ border: 'none' }}>LOG OUT</button>
+								</>
 							) : (
 								<>
 									<NavLink to="/login" className={({ isActive }) => isActive ? `nav-link active` : `nav-link`}>Login</NavLink>
