@@ -12,6 +12,7 @@ const DisplayUsers = ({ allUsers, setSelectedUser }) => {
 	return (
 		<div className='allUsers-container'>
 			<h3 className='heading'>All Users :</h3>
+			<div className='users-detail-container'>
 			{
 				allUsers.map((user,idx) => {
 					return (
@@ -24,6 +25,7 @@ const DisplayUsers = ({ allUsers, setSelectedUser }) => {
 					)
 				})
 			}
+			</div>			
 		</div>
 	)
 }
