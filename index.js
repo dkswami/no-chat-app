@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const mongoose = require("mongoose");
 const app = express();
@@ -12,7 +13,21 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/v1/auth", userRoutes);
-app.use("/api/v1/chat", messageRoutes );
+app.use("/api/v1/chat", messageRoutes);
+console.log("process.env.NODE_ENV", process.env.NODE_ENV)
+//deployment
+
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "/client/build")));
+
+	app.get("*", (req, res) =>
+		res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+	);
+} else {
+	app.get("/", (req, res) => {
+		res.send("API is running..");
+	});
+}
 
 const connectionParams = {
 	useNewUrlParser: true,
@@ -25,7 +40,7 @@ mongoose.connect(process.env.MONGO_URL, connectionParams)
 	.catch((err) => {
 		console.error(`Error connecting to the database. n${err}`);
 	}
-)
+	)
 
 const server = app.listen(process.env.PORT || 4000, () => {
 	console.log(`Server is running on port: ${process.env.PORT || 4000}`);
@@ -49,7 +64,7 @@ io.on("connection", (socket) => {
 	//console.log("connected users",onlineUsers)
 
 	socket.on("send-message", (data) => {
-		const sendUserSocket = onlineUsers.get(data.to);	
+		const sendUserSocket = onlineUsers.get(data.to);
 		if (sendUserSocket) {	// if user is online
 			socket.to(sendUserSocket).emit("receive-message", data.message)
 		}
