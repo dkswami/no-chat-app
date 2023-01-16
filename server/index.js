@@ -11,8 +11,11 @@ const messageRoutes = require("./routes/messageRoutes")
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+	res.send("API is running..");
+});
 app.use("/api/v1/auth", userRoutes);
-app.use("/api/v1/chat", messageRoutes );
+app.use("/api/v1/chat", messageRoutes);
 
 const connectionParams = {
 	useNewUrlParser: true,
@@ -25,7 +28,7 @@ mongoose.connect(process.env.MONGO_URL, connectionParams)
 	.catch((err) => {
 		console.error(`Error connecting to the database. n${err}`);
 	}
-)
+	)
 
 const server = app.listen(process.env.PORT || 4000, () => {
 	console.log(`Server is running on port: ${process.env.PORT || 4000}`);
@@ -49,7 +52,7 @@ io.on("connection", (socket) => {
 	//console.log("connected users",onlineUsers)
 
 	socket.on("send-message", (data) => {
-		const sendUserSocket = onlineUsers.get(data.to);	
+		const sendUserSocket = onlineUsers.get(data.to);
 		if (sendUserSocket) {	// if user is online
 			socket.to(sendUserSocket).emit("receive-message", data.message)
 		}
