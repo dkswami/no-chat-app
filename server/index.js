@@ -52,9 +52,9 @@ io.on("connection", (socket) => {
 	//console.log("connected users",onlineUsers)
 
 	socket.on("send-message", (data) => {
-		const sendUserSocket = onlineUsers.get(data.to);
-		if (sendUserSocket) {	// if user is online
-			socket.to(sendUserSocket).emit("receive-message", data.message)
+		const sendToUserSocket = onlineUsers.get(data.to);
+		if (sendToUserSocket) {	// if user is online
+			socket.to(sendToUserSocket).emit("receive-message", data.message)
 		}
 	})
 

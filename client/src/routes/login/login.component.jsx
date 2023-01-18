@@ -29,7 +29,7 @@ function Login() {
 			else if (data.status === true) {
 				localStorage.setItem('user_data', JSON.stringify(data.user))
 				setIsLoggedIn(true);
-				alert(`registered successfully, ${data.user.name}`);
+				alert(`Logged In successfully, ${data.user.name}`);
 				navigate('/');
 			}
 		} catch {

@@ -4,15 +4,20 @@ const bcrypt = require("bcrypt");
 module.exports.login = async (req, res, next) => {
 	try {
 		const { email, password } = req.body;
-		const user = await User.findOne({ email });
-		if (!user) {
+		const userData = await User.findOne({ email });
+		if (!userData) {
 			return res.json({ message: "Email or password is incorrect", status: false });
 		}
-		const isPasswordValid = await bcrypt.compare(password, user.password);
+		const isPasswordValid = await bcrypt.compare(password, userData.password);
 		if (!isPasswordValid) {
 			return res.json({ message: "Email or password is incorrect", status: false });
 		}
-		delete user.password;
+		const user = {
+			_id: userData._id,
+			name: userData.name,
+			email: userData.email,
+		}
+		console.log(user)
 		return res.json({ status: true, user});
 	} catch (error) {
 		next(error)
@@ -27,12 +32,18 @@ module.exports.register = async (req, res, next) => {
 			return res.json({ message: "Email already exists" })
 		}
 		const hashedPassword = await bcrypt.hash(password, 10);
-		const user = await User.create({
+		const userData = await User.create({
 			name,
 			email,
 			password: hashedPassword
 		});
-		delete user.password;
+		
+		const user = {
+			_id: userData._id,
+			name: userData.name,
+			email: userData.email,
+		}
+		console.log(user)
 		return res.json({ status: true, user })
 	} catch (error) {
 		next(error)
