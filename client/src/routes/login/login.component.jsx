@@ -32,8 +32,11 @@ function Login() {
 				alert(`Logged In successfully, ${data.user.name}`);
 				navigate('/');
 			}
-		} catch {
-			console.log('Error');
+		} catch(error) {
+			console.log('Error',error);
+			if (error.code === "ERR_BAD_RESPONSE" || "ERR_NETWORK"){
+				alert('Backend Server is not running. Please start the server and try again.')
+			}
 		}
 	}
 
